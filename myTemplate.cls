@@ -3,9 +3,7 @@
 \LoadClass[a4paper]{article}
 
 
-%可选项：titpage,homework,eng,nofooter
-\newif\iftpage\tpagefalse					%单独标题页
-\DeclareOption{titpage}{\tpagetrue}
+%可选项：homework,eng,nofooter
 \newif\ifhstyle\hstylefalse					%适合作业的格式
 \DeclareOption{homework}{\hstyletrue}
 \newif\ifchn\chntrue						%中文
