@@ -1,0 +1,58 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{myTheorem}[2023/7/11]
+
+\RequirePackage{thmtools}
+\RequirePackage[framemethod=TikZ]{mdframed}
+%以下是几种box配置
+%来自 Evan CHAN 的著作 A Infinite Napkin ，有改动
+%见于https://github.com/vEnhance/napkin
+\mdfdefinestyle{mdredbox}{
+	linewidth=0.5pt,
+	skipabove=12pt,
+	frametitleaboveskip=5pt,
+	frametitlebelowskip=0pt,
+	skipbelow=2pt,
+	frametitlefont=\bfseries,
+	innertopmargin=4pt,
+	innerbottommargin=8pt,
+	linecolor=RawSienna,
+	backgroundcolor=Salmon!5,
+}
+\declaretheoremstyle[
+	headfont=\bfseries\color{RawSienna},
+	mdframed={style=mdredbox},
+	headpunct={\\[3pt]},
+	postheadspace={0pt},
+]{thmredbox}
+
+\mdfdefinestyle{mdblackbox}{
+	skipabove=8pt,
+	linewidth=3pt,
+	rightline=false,
+	leftline=true,
+	topline=false,
+	bottomline=false,
+	linecolor=black,
+	backgroundcolor=RedViolet!5!gray!5,
+}
+\declaretheoremstyle[
+	headfont=\bfseries,
+	bodyfont=\normalfont\small,
+	spaceabove=0pt,
+	spacebelow=0pt,
+	mdframed={style=mdblackbox},
+	headpunct={},
+]{thmblackbox}
+
+\providecommand{\newredbox}[2]{
+	\declaretheorem[style=thmredbox,name=#1]{#2}
+	\catcode`*11
+	\declaretheorem[style=thmredbox,numbered=no,name=#1]{#2*}
+	\catcode`*12
+}
+\providecommand{\newblackbox}[2]{
+	\declaretheorem[style=thmblackbox,name=#1]{#2}
+	\catcode`*11
+	\declaretheorem[style=thmblackbox,numbered=no,name=#1]{#2*}
+	\catcode`*12
+}

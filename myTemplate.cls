@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{myTemplate}[2022/10/10]
+\ProvidesClass{myTemplate}[2023/07/10]
 \LoadClass[a4paper]{article}
 
 
@@ -16,50 +16,32 @@
 \ProcessOptions\relax
 
 
-%语言支持
-%\RequirePackage[utf8]{inputenc}	%似在XeLaTeX下不必使用
-\RequirePackage{xeCJK}             	%中文
-
-
-%数学支持与运算符快捷方式
-\RequirePackage{amsmath,amssymb,amsthm}     %数学支持
-\RequirePackage{bm}                         %粗斜体
-\providecommand{\dif}{\,\mathrm{d}}
-\providecommand{\euler}{\mathrm{e}}
-\providecommand{\driv}[2]{\frac{\dif #1}{\dif #2}}
-\providecommand{\ddriv}[2]{\dfrac{\dif #1}{\dif #2}}
+%数学支持
+\RequirePackage{myMath}
+\RequirePackage{siunitx}	%单位
 
 
 %颜色支持
-\RequirePackage[usenames,svgnames,dvipsnames]{xcolor}	%颜色
+\RequirePackage[usenames,svgnames,dvipsnames]{xcolor}
 
 
-%排版支持
-\RequirePackage{wrapfig}            %图文混排（环绕）      
-\RequirePackage{indentfirst}        %使每节第一段适用段首缩进
-\setlength{\parindent}{2em}     	%段首缩进量
-\linespread{1.4}                	%行距倍数
-\RequirePackage{geometry}			%边距等页面设置
-\geometry{
-	width=150mm,
-	top=25mm,
-	bottom=25mm,
-}
-%\RequirePackage{multicol}
-\RequirePackage{caption}
-\RequirePackage{subcaption}
+%代码块格式
+\RequirePackage{myCode}
 
 
-%杂项
+%本地化
+%\RequirePackage[utf8]{inputenc}	%似在XeLaTeX下不必使用
+\ifchn
+	\RequirePackage{ctex}             	%中文
+\fi
 %章节标题
+\RequirePackage{titlesec}
 \def\probmark{\ifchn 题 \else Problem \fi}
-\RequirePackage{titlesec}           %章节标题设置
 \ifhstyle
 	\titleformat{\section}{\raggedright\large\bfseries}{\probmark\,\,}{0em}{}
 	\titleformat{\subsection}[runin]{\raggedright\bfseries}{}{1em}{(\,}[\,)]
+	\renewcommand{\sectionmark}[1]{\markboth{\probmark\, #1}{}} 
 \fi
-
-\RequirePackage{siunitx}	%单位
 
 \RequirePackage{authblk}                       	%改良的作者和联系方式显示
 \setlength{\affilsep}{0em}						%修改作者与联系方式间的垂直间隔
@@ -77,17 +59,37 @@
 	\crefname{figure}{图}{图}
 	\crefname{table}{表}{表}
 	\crefname{equation}{式}{式}
+	\crefname{listing}{代码}{代码}
 	\ifhstyle
 		\crefname{section}{题}{题}
 	\else
 		\crefname{section}{节}{节}
 	\fi
 	\renewcommand{\figurename}{图}                  
-	\renewcommand{\tablename}{表}                   
+	\renewcommand{\tablename}{表}
+	\renewcommand{\lstlistingname}{代码}
 	\renewcommand{\abstractname}{\large{摘要}\\} 
 	\renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
 \fi
 
+
+%排版支持
+\RequirePackage{wrapfig}            %图文混排（环绕）      
+\RequirePackage{indentfirst}        %使每节第一段适用段首缩进
+\setlength{\parindent}{2em}     	%段首缩进
+\linespread{1.4}                	%行距倍数
+\RequirePackage{geometry}			%页面设置
+\geometry{
+	width=150mm,
+	top=25mm,
+	bottom=25mm,
+}
+%\RequirePackage{multicol}
+\RequirePackage{caption}
+\RequirePackage{subcaption}
+
+
+%表格
 \RequirePackage{multirow}       %表格分行
 \RequirePackage{booktabs}       %三线表
 \RequirePackage{longtable}		%跨页表格
@@ -95,61 +97,7 @@
 
 
 %定理环境
-\RequirePackage{thmtools}                   	%定理等环境支持
-\RequirePackage[framemethod=TikZ]{mdframed}     %带背景色的box
-%以下是几种box配置
-%来自 Evan CHAN 的著作 A Infinite Napkin ，有改动
-%见于https://github.com/vEnhance/napkin
-\mdfdefinestyle{mdredbox}{
-	linewidth=0.5pt,
-	skipabove=12pt,
-	frametitleaboveskip=5pt,
-	frametitlebelowskip=0pt,
-	skipbelow=2pt,
-	frametitlefont=\bfseries,
-	innertopmargin=4pt,
-	innerbottommargin=8pt,
-	linecolor=RawSienna,
-	backgroundcolor=Salmon!5,
-}
-\declaretheoremstyle[
-	headfont=\bfseries\color{RawSienna},
-	mdframed={style=mdredbox},
-	headpunct={\\[3pt]},
-	postheadspace={0pt},
-]{thmredbox}
-
-\mdfdefinestyle{mdblackbox}{
-	skipabove=8pt,
-	linewidth=3pt,
-	rightline=false,
-	leftline=true,
-	topline=false,
-	bottomline=false,
-	linecolor=black,
-	backgroundcolor=RedViolet!5!gray!5,
-}
-\declaretheoremstyle[
-	headfont=\bfseries,
-	bodyfont=\normalfont\small,
-	spaceabove=0pt,
-	spacebelow=0pt,
-	mdframed={style=mdblackbox},
-	headpunct={},
-]{thmblackbox}
-
-\newcommand{\newredbox}[2]{
-	\declaretheorem[style=thmredbox,name=#1]{#2}
-	\catcode`*11
-	\declaretheorem[style=thmredbox,numbered=no,name=#1]{#2*}
-	\catcode`*12
-}
-\newcommand{\newblackbox}[2]{
-	\declaretheorem[style=thmblackbox,name=#1]{#2}
-	\catcode`*11
-	\declaretheorem[style=thmblackbox,numbered=no,name=#1]{#2*}
-	\catcode`*12
-}
+\RequirePackage{myTheorem}
 
 
 %绘图支持
@@ -160,12 +108,11 @@
 
 
 %页眉页脚设置
-%以下取消|\maketitle|对|\@title|和|@author|的重置
-%原定义参见article.cls
-%对其进行修改可以自定义\maketitle宏
+%以下取消|\maketitle|对|\@title|和|\@author|的重置
+%原始定义参见article.cls
 \makeatletter
 \renewcommand{\maketitle}
-{	
+{
 	\par
     \begingroup
 		\renewcommand\thefootnote{\@fnsymbol\c@footnote}%
@@ -187,30 +134,40 @@
     	%\thispagestyle{plain}
 		\@thanks
     \endgroup
-    \setcounter{footnote}{0}%
+    \setcounter{footnote}{0}
     \global\let\thanks\relax
     \global\let\maketitle\relax
     \global\let\@maketitle\relax
     \global\let\@thanks\@empty
-    %\global\let\@author\@empty
+	\ifx\@title\@empty
+		\relax
+	\else
+		\let\Title\@title
+	\fi
+	\ifx\@author\@empty
+		\relax
+	\else
+		\let\Author\@author
+	\fi
+    \global\let\@author\@empty
     \global\let\@date\@empty
-    %\global\let\@title\@empty
+    \global\let\@title\@empty
     \global\let\title\relax
     \global\let\author\relax
     \global\let\date\relax
     \global\let\and\relax
 }
-
-\def\Title{\@title}
-\def\Author{\@author}
-%此处|\Title|的出现是为了解决|\fancyhead|无法访问|\@title|的问题
-%倘若有更好的解决办法，烦请告知
 \makeatother
+\ifx\Title\undefined
+	\let\Title\empty
+\fi
+\ifx\Author\undefined
+	\let\Author\empty
+\fi
 
 \RequirePackage{fancyhdr}
 \RequirePackage{lastpage}
-\pagestyle{fancy}
-\fancypagestyle{preContent}
+\fancypagestyle{fancy}
 {
     \fancyhf{}
     \fancyhead[L]{\Title}
@@ -231,8 +188,5 @@
 	\fancyfoot[L]{\raisebox{-3ex}{\includegraphics[width=0.3\textwidth]{sampleLogo.pdf}}}
 	\fi
 }
-\pagestyle{preContent}
+\pagestyle{fancy}
 
-\ifhstyle
-	\renewcommand{\sectionmark}[1]{\markboth{\probmark\, #1}{}} 
-\fi
