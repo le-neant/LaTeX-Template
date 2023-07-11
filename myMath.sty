@@ -1,0 +1,16 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{myMath}[2023/7/11]
+
+\RequirePackage{amsmath,amssymb,amsthm}
+\RequirePackage{bm} 
+\RequirePackage{ifthen}
+
+\providecommand{\euler}{\mathrm{e}}
+
+\providecommand{\dif}[1][]{\,\mathrm{d}\ifthenelse{\equal{#1}{}}{}{\left( #1 \right)}}
+\providecommand{\driv}[2]{\frac{\dif #1}{\dif #2}}
+\providecommand{\Driv}[2]{\dfrac{\dif #1}{\dif #2}}
+\providecommand{\difp}[1][]{\,\partial\ifthenelse{\equal{#1}{}}{}{\left( #1 \right)}}
+\providecommand{\drivp}[2]{\frac{\difp #1}{\difp #2}}
+\providecommand{\Drivp}[2]{\dfrac{\difp #1}{\difp #2}}
+
