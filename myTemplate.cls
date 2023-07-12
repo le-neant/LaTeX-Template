@@ -117,8 +117,7 @@
 \pgfplotsset{width=11cm,compat=1.17}
 
 
-%页眉页脚设置
-%以下取消|\maketitle|对|\@title|和|\@author|的重置
+%标题和作者信息的保存
 %原始定义参见article.cls
 \makeatletter
 \renewcommand{\maketitle}
@@ -167,6 +166,8 @@
 	\let\Author\empty
 \fi
 
+
+%页眉页脚设置
 \RequirePackage{fancyhdr}
 \RequirePackage{lastpage}
 \fancypagestyle{fancy}
