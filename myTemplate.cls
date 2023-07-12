@@ -19,6 +19,10 @@
 %数学支持
 \RequirePackage{myMath}
 \RequirePackage{siunitx}	%单位
+\sisetup{
+	separate-uncertainty = true,
+	inter-unit-product = \ensuremath{{}\cdot{}}
+}
 
 
 %颜色支持
@@ -32,7 +36,7 @@
 %本地化
 %\RequirePackage[utf8]{inputenc}	%似在XeLaTeX下不必使用
 \ifchn
-	\RequirePackage{ctex}             	%中文
+	\RequirePackage{ctex}         	%中文
 \fi
 %章节标题
 \RequirePackage{titlesec}
@@ -43,10 +47,16 @@
 	\renewcommand{\sectionmark}[1]{\markboth{\probmark\, #1}{}} 
 \fi
 
-\RequirePackage{authblk}                       	%改良的作者和联系方式显示
-\setlength{\affilsep}{0em}						%修改作者与联系方式间的垂直间隔
+\RequirePackage{authblk}    	%改良的作者和联系方式显示
+\setlength{\affilsep}{0em}		%修改作者与联系方式间的垂直间隔
+\ifchn
+	\renewcommand{\Authsep}{ }
+	\renewcommand{\Authand}{ }
+	\renewcommand{\Authands}{ }
+\fi
 
-\RequirePackage{hyperref}   %为交叉引用添加超链接
+
+\RequirePackage{hyperref}   	%为交叉引用添加超链接
 \hypersetup{
 	colorlinks=true,
 	linkcolor=blue,
@@ -139,16 +149,8 @@
     \global\let\maketitle\relax
     \global\let\@maketitle\relax
     \global\let\@thanks\@empty
-	\ifx\@title\@empty
-		\relax
-	\else
-		\let\Title\@title
-	\fi
-	\ifx\@author\@empty
-		\relax
-	\else
-		\let\Author\@author
-	\fi
+	\let\Title\@title
+	\let\Author\@author
     \global\let\@author\@empty
     \global\let\@date\@empty
     \global\let\@title\@empty
