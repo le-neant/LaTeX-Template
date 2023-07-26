@@ -8,7 +8,7 @@
 - 其他琐碎功能
 
 # 如何使用
-将所有的.cls和.sty文件复制到你的工作目录中，并以`\documentclass[nofooter]{myTemplate}`开始你的.tex文件
+将所有的.cls和.sty文件复制到你的工作目录中，并以`\documentclass{myTemplate}`开始你的.tex文件
 
 如果你愿意安装它，以在Windows系统下的TeX Live发行版为例，你需要将这些文件复制到你的TeX Live安装目录下的 \texmf-local\tex\latex\local 文件夹，然后在命令行中运行`texhash`命令
 
