@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{myTemplate}[2023/07/10]
+\ProvidesClass{myTemplate}[2023/07/26]
 \LoadClass[a4paper]{article}
 
 
@@ -9,7 +9,7 @@
 \newif\ifchn\chntrue						%中文
 \DeclareOption{eng}{\chnfalse}
 \newif\iffooter\footertrue					%页脚图片
-\DeclareOption{nofooter}{\footerfalse}
+\DeclareOption{footerlogo}{\footertrue}
 \DeclareOption*{
 	\PassOptionsToClass{\CurrentOption}{article}
 }
